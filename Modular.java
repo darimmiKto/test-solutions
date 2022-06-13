@@ -11,6 +11,7 @@ public class Modular {
 		int two = input.nextInt();
 		int m = modular(new int[] {3, 5, 7}, one, two);
 		System.out.println(m);
+		input.close();
 	}
 	
 	private static int modular(int[] arr, int intInpOne, int intInpTwo) {
