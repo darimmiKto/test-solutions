@@ -1,67 +1,58 @@
 package Algoritm;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
 
 
 class Solution {
-	public static void main(String[] args) {
-		String one = "llo";
-		String two = "loj";
-		System.out.println(sol(one, two));
-		System.out.println(solTwo(one, two));
-	}
-	
-	
-	private static boolean sol(String one, String two) {
-		char[] oneChar = new char[one.length()];
-		char[] twoChar = new char[two.length()];
-		int length = one.length();
-		for (int i = 0; i < length; i++) {
-			oneChar[i] = one.charAt(i);
-			twoChar[i] = two.charAt(i); 
-		}
-		int counter = 0;
-		int entrance = 0;
-		for (int i = 0; i < length; i++) {
-			char c = oneChar[i];
-			for (int j = 0; j < length; j++) {
-				if (c == twoChar[j]) {
-					counter++;
-					entrance = entrance + 1;
-					if (entrance <= 2) {
-						counter--;
-					}
-				}
-					
-			}
-		}
-		if (counter == length) {
-			return true;
-		} else {
-			return false;
-		}
-		// 3 + 2n + 2 + 1n^2 // O(n^2)
-	}
-	
-	private static boolean solTwo(String one, String two) {
-		ArrayList<Character> oneChar = new ArrayList<>();
-		ArrayList<Character> twoChar = new ArrayList<>();
-		int length = one.length();
-		for (int i = 0; i < length; i++) {
-			oneChar.add(one.charAt(i));
-			twoChar.add(two.charAt(i));
-		}
-		oneChar.sort(null);
-		twoChar.sort(null);
-		int counter = 0;
-		while (counter < length) {
-			if (oneChar.get(counter) == twoChar.get(counter)) {
-				counter = counter + 1;
-			} else {
-				return false;
-			}
-		}
-		return true;
-		// 3 + 2n + n log n + n log n + n // o(n log n)
-	}
+	 public static void main(String[] args) {
+		 String one = "leetcode";
+		 String two = "etco";
+		 int num = minDistance(one, two);
+		 System.out.println(num);
+	 }
+	 
+	 private static int minDistance(String word1, String word2) {
+		 ArrayList<Character>oneChar = new ArrayList<>();
+		 ArrayList<Character>twoChar = new ArrayList<>();
+		 ArrayList<Character>threeChar = new ArrayList<>();
+		 for (int i = 0; i < word1.length(); i++) {
+			 oneChar.add(word1.charAt(i));
+		 }
+		 for (int i = 0; i < word2.length(); i++) {
+			 twoChar.add(word2.charAt(i));
+		 }
+		 if (twoChar.size() < oneChar.size()) {
+			 for (int i = 0; i < oneChar.size(); i++) {
+				 for(int j = 0; j < twoChar.size(); j++) {
+					 if (oneChar.get(i) == twoChar.get(j)) {
+						 threeChar.add(oneChar.get(i));
+						 oneChar.set(i, '*');
+						 twoChar.set(j, '*');
+					 }
+				 }
+			 } 
+		 } else {
+			 for (int i = 0; i < twoChar.size(); i++) {
+				 for(int j = 0; j < oneChar.size(); j++) {
+					 if (twoChar.get(i) == oneChar.get(j)) {
+						 threeChar.add(twoChar.get(i));
+						 twoChar.set(i, '*');
+						 oneChar.set(j, '*');
+					 }
+				 }
+			 } 
+		 }
+		 int minusCounter = 0;
+		 for (int i = threeChar.size(); i > 0; i--) {
+			 if (threeChar.get(i - 1) == '*') {
+				 minusCounter++;
+			 }
+		 }
+		 int threeSize = threeChar.size() - minusCounter;
+		 int number = (oneChar.size() - threeSize) + (twoChar.size() - threeSize); 
+		 return number;
+	 }
 }
