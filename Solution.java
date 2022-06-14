@@ -35,7 +35,6 @@ class Solution {
 					
 			}
 		}
-		System.out.println("counter: " + counter);
 		if (counter == length) {
 			return true;
 		} else {
